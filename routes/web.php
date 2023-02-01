@@ -28,8 +28,10 @@ Route::prefix('prototype')->name('prototype.')->group(function () {
     })->name('login');
     Route::get('/register', function(){
         return Inertia::render('Prototype/Register');
-        return "Hello Register";
     })->name('register');
+    Route::get('/dashboard', function(){
+        return Inertia::render('Prototype/Dashboard');
+    })->name('dashboard');
 });
 
 Route::middleware('auth')->group(function () {
