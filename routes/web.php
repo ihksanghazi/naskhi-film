@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\MovieController;
+use App\Http\Controllers\User\SubcriptionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,7 +23,11 @@ Route::redirect('/','/login');
 
 Route::middleware(['auth','role:user'])->prefix('dashboard')->name('user.dashboard.')->group(function(){
     Route::get('/',[DashboardController::class,'index'])->name('index');
-    Route::get('movie/{movie:slug}', [MovieController::class,'show'])->name('movie.show');
+
+    Route::get('movie/{movie:slug}', [MovieController::class,'show'])->name('movie.show')->middleware('checkUserSubscription:true');
+
+    Route::get('subcription-plan', [SubcriptionController::class,'index'])->name('subcriptionPlan.index')->middleware('checkUserSubscription:false');
+    Route::post('subcription-plan/{subcriptionPlans:id}/user-subscribe', [SubcriptionController::class,'userSubscribe'])->name('subcriptionPlan.userSubscribe')->middleware('checkUserSubscription:false');
 });
 
 Route::prefix('prototype')->name('prototype.')->group(function () {
