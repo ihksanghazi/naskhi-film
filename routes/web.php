@@ -19,6 +19,7 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('midtrans/notification',[SubcriptionController::class,'midtransCallback']);
 
 Route::redirect('/','/login');
 
